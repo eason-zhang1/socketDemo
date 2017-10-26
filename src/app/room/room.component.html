@@ -1,0 +1,67 @@
+<div class="room-div">
+  <!--<div class="room-title">聊天房间</div>-->
+  <div class="room-content">
+    <ul>
+      <li *ngFor="let item of responseList">
+        <div *ngIf="item.type == 1 && item.name != currentUser" class="user-info">
+
+          <div class="user-photo">
+            <span class="glyphicon glyphicon-user"></span>
+          </div>
+
+          <div class="user-other">
+            <div class="user-name-time">
+              <div class="user-name">{{item.name}}</div>
+              <div class="user-time">{{item.time}}</div>
+            </div>
+            <div class="user-msg">
+              <span class="bot"></span>
+              <span class="top"></span>
+              {{item.message}}
+            </div>
+          </div>
+        </div>
+
+        <!-- self -->
+        <div *ngIf="item.type == 1 && item.name == currentUser" class="user-info">
+          <div class="user-other">
+            <!--<div class="user-name-time">
+              <div class="user-name">{{item.name}}</div>
+              <div class="user-time">{{item.time}}</div>
+            </div>-->
+            <div class="user-msg2">
+              {{item.message}}
+              <span class="bot2"></span>
+              <span class="top2"></span>
+            </div>
+          </div>
+
+          <div class="user-photo" style="padding-top: 5px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </div>
+        </div>
+
+        <div *ngIf="item.type == 0" class="system-msg">
+          <span class="glyphicon glyphicon-user"></span>{{item.message}}{{item.time}}
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row room-edit">
+  <div class="col-md-11">
+    <textarea required [(ngModel)]="user_msg" (keyup.enter)="sendMsg(this.user_msg)" ></textarea>
+  </div>
+  <div class="col-md-1">
+    <button (click)="sendMsg(this.user_msg)">发送</button>
+  </div>
+</div>
+
+
+<div *ngIf="!isConnected" class="mask-layer">
+  <div class="box">
+    loading...
+    <div data-loader='heart' style="margin-left: 40px;"></div>
+  </div>
+</div>
